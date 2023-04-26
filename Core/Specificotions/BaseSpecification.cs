@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Core.Specificotions
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
+        public BaseSpecification( )
+        {
+             
+        }
+
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
+        {
+             Criteria = criteria;
+        }
+
         public BaseSpecification(Expression<Func<T, bool>> criteria,List<Expression<Func<T, object>>> includes )
         {
             Criteria = criteria;
