@@ -1,10 +1,8 @@
-using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Core.Interfaces;
-using Infrastructure;
 using API.Helpers;
 using API.MiddleWare;
+using API.Extensions;
 
 namespace API
 {
@@ -19,15 +17,11 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository,ProductRepository>();
-            services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
+            services.AddApplicationServices();
             services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("Default")) );
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
-            });
+            services.AddSwagerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,12 +29,6 @@ namespace API
         {
             app.UseMiddleware<ExceptionMiddleware>();
             
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
-            }
-
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 
             app.UseHttpsRedirection();
@@ -54,6 +42,8 @@ namespace API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagerDocumentation();
         }
     }
 }
