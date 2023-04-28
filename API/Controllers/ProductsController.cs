@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -13,7 +14,7 @@ namespace API.Controllers
         public IGenericRepository<Product> _productRepository { get; }
         public IGenericRepository<ProductBrand> _productBrandRepository { get; }
         public IGenericRepository<ProductType> _productTypeRepository { get; }
-                public IMapper _mapper { get; }
+        public IMapper _mapper { get; }
         public ProductsController(IGenericRepository<Product> productRepository, 
             IGenericRepository<ProductBrand> productBrandRepository, IGenericRepository<ProductType> productTypeRepository,
 
@@ -27,15 +28,23 @@ namespace API.Controllers
         }
 
          [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto1>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductToReturnDto1>>> GetProducts([FromQuery]ProductSpecParams param)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
+            var spec = new ProductsWithTypesAndBrandsSpecification(param);
+            var countSpec = new ProductWithFiltersAndCountSpecification(param);
+
+            var totalItems = await _productRepository.CountAsync(spec); 
             var products = await _productRepository.ListAsync(spec);
+
+
             if(products.Count < 1) 
             {
                 return NotFound(new ApiResponse(404));
             }
-            return Ok(_mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturnDto1>>(products)) ;
+
+            var data = _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturnDto1>>(products);
+            var dataPaged = new Pagination<ProductToReturnDto1>(param.PageIndex, param.PageSize, totalItems,data);
+            return Ok(dataPaged) ;
         } 
 
         [HttpGet("{id}")]
