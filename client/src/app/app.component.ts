@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { IProduct } from './models/product';
+import { IPagination } from './models/pagination';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +14,11 @@ export class AppComponent implements OnInit {
   constructor(private http:HttpClient) {
      
   }
-  products: any [];
+  products: IProduct [];
 
   ngOnInit(): void {
     this.http.get('https://localhost:5001/api/products?sort=name&search=a').subscribe(     
-    (response: any ) => {
+    (response: IPagination ) => {
        this.products = response.data;;
     },
     error => 
