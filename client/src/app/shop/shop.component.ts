@@ -40,10 +40,11 @@ export class ShopComponent implements OnInit{
         this.shopParams.pageNumber = response.pageIndex;
         this.shopParams.pageSize = response.pageSize;
         this.totalCount = response.count;
-        console.log(this.totalCount);
       },
       error: error => {
         console.log(error);
+        this.products = null;;
+        this.totalCount = 0;
       }
     })
   }
@@ -88,6 +89,8 @@ export class ShopComponent implements OnInit{
 
   onPageChanged(event: any)
   {
+    console.log(event.page);
     this.shopParams.pageNumber = event.page;
+    this.getProducts();
   }
 }

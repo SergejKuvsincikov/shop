@@ -31,9 +31,11 @@
         </section>
         <section class="col-9">
             <div class="d-flex justify-content-between align-items-center pb-2">
-                <header>
-                    <Span>Showing <strong>10</strong> of <strong>16</strong>Results</Span>
-                </header>
+                <app-paging-header
+                    [pageNumber] = "this.shopParams.pageNumber"
+                    [pageSize] = "this.shopParams.pageSize"
+                    [totalCount] = "this.totalCount"
+                ></app-paging-header>
                 <div class="d-flex mt-2">
                     <input type="text" class="form-control me-2" style="width: 300px" placeholder="Search">
                     <button class="btn btn-outline-primary mx-2">Search</button>
@@ -46,25 +48,12 @@
                     <app-product-item [product]="product"></app-product-item>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <pagination 
-                    [boundaryLinks]="true" 
-                    [totalItems]="this.totalCount"
-                    (pageChanged)="onPageChanged($event)"
-                    itemsPerPage="shopParams.pageSize"
-                    previousText="&lsaquo;" 
-                    nextText="&rsaquo;" 
-                    firstText="&laquo;" 
-                    lastText="&raquo;">
-                </pagination>
-            </div>
-            <pagination [boundaryLinks]="true" [totalItems]="this.totalCount" [itemsPerPage]="this.shopParams.pageSize"
-                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
- 
-            </pagination>
-            <div class="d-flex justify-content-center">
-                {{this.totalCount}}
-                {{shopParams.pageSize}}
+            <div class="d-flex justify-content-center" *ngIf="this.totalCount && this.totalCount> 0">
+                <app-pager                     
+                    [pageSize] = "this.shopParams.pageSize"
+                    [totalCount] = "this.totalCount"
+                    (pageChanged) = "onPageChanged($event)">
+            </app-pager>
             </div>
         </section>
     </div>
