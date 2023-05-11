@@ -37,9 +37,10 @@
                     [totalCount] = "this.totalCount"
                 ></app-paging-header>
                 <div class="d-flex mt-2">
-                    <input type="text" class="form-control me-2" style="width: 300px" placeholder="Search">
-                    <button class="btn btn-outline-primary mx-2">Search</button>
-                    <button class="btn btn-outline-success">Reset</button>
+                    <input (keyup.enter)="onSearch()" type="text" class="form-control me-2" #search style="width: 300px" 
+                        placeholder="Search">
+                    <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
+                    <button (click)="onReset()" class="btn btn-outline-success">Reset</button>
                 </div>
             </div> 
 
