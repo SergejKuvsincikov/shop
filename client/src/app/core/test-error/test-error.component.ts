@@ -11,6 +11,7 @@ export class TestErrorComponent {
   constructor (private http: HttpClient) {}
 
   baseUrl = environment.apiUrl;
+  validationErrors: any;
 
   get404Error() {
     this.http.get(this.baseUrl + 'product/42').subscribe(
@@ -29,14 +30,20 @@ export class TestErrorComponent {
   get400ValidationError() {
     this.http.get(this.baseUrl + 'product/aaaa').subscribe(
       response => {console.log(response);},
-      error => {console.log(error)}
+      error => {
+        console.log(error);
+        console.log(error.errors);
+        this.validationErrors = error.errors;
+      }
       )
   }
 
   get400Error() {
     this.http.get(this.baseUrl + 'buggy/badrequest').subscribe(
       response => {console.log(response);},
-      error => {console.log(error)}
+      error => {
+        console.log(error);
+      }
       )
   }
 
