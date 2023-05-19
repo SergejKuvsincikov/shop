@@ -11,7 +11,7 @@ import { ShopParams } from '../shared/models/shopParams';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit{
-  @ViewChild('search',{static: true}) searchTerm: ElementRef;
+  @ViewChild('search',{static: false}) searchTerm: ElementRef;
   products: Product[];
   brands: Brand[]; 
   productTypes: ProductType[];
@@ -19,7 +19,7 @@ export class ShopComponent implements OnInit{
   totalCount: number;
 
   sortOptions = [
-    {name: 'Alphabetical', value: 'name'},
+    {name: 'Alphabetical', value: 'name'}, 
     {name: 'Price: Low to high', value: 'PriceAsc'},
     {name: 'Price: High to low', value: 'PriceDesc'},
   ];
