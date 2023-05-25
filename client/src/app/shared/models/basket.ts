@@ -20,4 +20,10 @@ export interface IBasket {
       items: IBasketItem[] = [];
     }
 
+  export interface IBasketTotal {
+    shipping: number;
+    subtotal: number;
+    total: number;
+  }
+
    
