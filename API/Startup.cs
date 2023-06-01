@@ -4,6 +4,8 @@ using API.Helpers;
 using API.MiddleWare;
 using API.Extensions;
 using StackExchange.Redis;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace API
 {
@@ -21,7 +23,11 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddApplicationServices();
-            services.AddDbContext<StoreContext>(x => x.UseSqlite(_configuration.GetConnectionString("Default")) );
+            services.AddIdentityServices();
+            services.AddDbContext<StoreContext>(x => 
+                x.UseSqlite(_configuration.GetConnectionString("Default")) );
+            services.AddDbContext<AppIdentityDbContext>(x => 
+                x.UseSqlite(_configuration.GetConnectionString("IdentityConnection")) );
 
             services.AddSingleton<IConnectionMultiplexer ,ConnectionMultiplexer>(c => {
                 var configuration = ConfigurationOptions.Parse(_configuration.GetConnectionString("Redis"), true);
