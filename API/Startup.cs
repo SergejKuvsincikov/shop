@@ -23,7 +23,7 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddApplicationServices();
-            services.AddIdentityServices();
+            services.AddIdentityServices(_configuration);
             services.AddDbContext<StoreContext>(x => 
                 x.UseSqlite(_configuration.GetConnectionString("Default")) );
             services.AddDbContext<AppIdentityDbContext>(x => 
@@ -60,6 +60,7 @@ namespace API
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
