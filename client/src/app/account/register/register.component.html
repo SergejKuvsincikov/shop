@@ -9,6 +9,12 @@
         <app-text-input [formControl]="registerForm.controls['email']" [label]="'Email Address'"></app-text-input>
         <app-text-input [formControl]="registerForm.controls['password']" [label]="'Password'" [type]="'password'"></app-text-input>
    
+        <ul class="text-danger list-unstyled" *ngIf="errors">
+          <li *ngFor="let item of errors">
+            {{item}}
+          </li>
+        </ul>
+
         <div class="d-grid">
           <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary mt-3" type="submit">Register</button>
         </div>
