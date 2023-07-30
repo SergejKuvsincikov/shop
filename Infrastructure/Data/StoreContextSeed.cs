@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Entities.OrderAgregate;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data
@@ -38,7 +39,19 @@ namespace Infrastructure.Data
                     {
                         storeContext.Products.Add(item);
                     }
-                    await storeContext.SaveChangesAsync();                }
+                    await storeContext.SaveChangesAsync();
+                }
+                
+                if(!storeContext.DeliveryMethods.Any())
+                {
+                    var dmData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                    var dms = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
+                    foreach (var item in dms)
+                    {
+                        storeContext.DeliveryMethods.Add(item);
+                    }
+                    await storeContext.SaveChangesAsync();                 
+                }
             }
             catch 
             {
