@@ -44,7 +44,7 @@ namespace Infrastructure.Services
 
             var order = new Order(items,buyerEmail,ahippingAddress,deliveryMethod,subTotal);
 
-            // TODO : save to DB
+             // TODO : save to DB
 
             return order;
         }
