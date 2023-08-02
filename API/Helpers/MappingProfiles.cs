@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using API.DTOs;
 using AutoMapper;
 using Core.Entities;
-using Core.Entities.Identity;
+
 
 namespace API.Helpers
 {
@@ -18,10 +18,19 @@ namespace API.Helpers
             .ForMember(d => d.ProductType, o => o.MapFrom(p => p.ProductType.Name))
             .ForMember(d => d.PictureUrl, o=>o.MapFrom<ProductUrlResolver>()    );
 
-            CreateMap<Address,AddressDto>().ReverseMap();
+            CreateMap<Core.Entities.Identity.Address,AddressDto>().ReverseMap();
             CreateMap<CustomerBasketDto,CustomerBasket>();
             CreateMap<BasketItemDto,BasketItem>(); 
             CreateMap<AddressDto,Core.Entities.OrderAgregate.Address>();
+
+            CreateMap<Core.Entities.OrderAgregate.Order,OrderToReturnDTO>()
+                .ForMember(d => d.DeliveryMethod, o => o.MapFrom(p => p.DeliveryMethod.ShortName))
+                .ForMember(d => d.ShippingPrice, o => o.MapFrom(p => p.DeliveryMethod.Price));
+            CreateMap<Core.Entities.OrderAgregate.OrderItem,OrderItemDto>()
+            .ForMember(d => d.ProductId, o => o.MapFrom(p => p.ItemOrdered.ProductItemId))
+            .ForMember(d => d.ProductName, o => o.MapFrom(p => p.ItemOrdered.ProductName))
+            .ForMember(d => d.PictureUrl, o => o.MapFrom(p => p.ItemOrdered.PictureUrl))
+            .ForMember(d => d.PictureUrl, o => o.MapFrom<OrderItemUrlResolver>());
         }
     }
 } 
