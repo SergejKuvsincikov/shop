@@ -8,21 +8,24 @@ import { OrderTotalsComponent } from './Components/order-totals/order-totals.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from './Components/text-input/text-input.component';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import { StepperComponent } from './Components/stepper/stepper.component';
 
 @NgModule({
   declarations: [
     PagingHeaderComponent,
     PagerComponent,
     OrderTotalsComponent,
-    TextInputComponent
+    TextInputComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
     PaginationModule.forRoot(),
     CarouselModule.forRoot(),
     BsDropdownModule.forRoot(),
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    CdkStepperModule
   ],
   exports: [
     PaginationModule,
@@ -32,7 +35,9 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
     OrderTotalsComponent,
     ReactiveFormsModule,
     TextInputComponent,
-    BsDropdownModule
+    BsDropdownModule,
+    CdkStepperModule,
+    StepperComponent
   ]
 })
 export class SharedModule { }
