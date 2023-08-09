@@ -9,13 +9,10 @@ import { IOrder } from 'src/app/shared/models/orders';
 })
 export class CheckoutSuccessComponent {
 
-  order: IOrder;
+  order?: IOrder;
 
   constructor(private router: Router) {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation && navigation.extras && navigation.extras.state;
-    if(state) {
-      this.order = state as IOrder;
-    }
+    this.order = navigation?.extras?.state as IOrder
   }
 }
