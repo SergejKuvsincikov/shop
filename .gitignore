@@ -2,3 +2,12 @@ obj
 bin
 appsettings.json
 *.db
+client/ssl/server1.key
+client/ssl/server1.crt
+client/ssl/server.key
+client/ssl/server.crt
+client/ssl/generate.sh
+client/ssl/openssl-custom.cnf
+client/ssl/gen.bat
+client/ssl/server.crt
+client/ssl/server.key
