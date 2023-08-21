@@ -24,7 +24,6 @@ export class BasketService {
     pipe(
       map((basket:IBasket) => {
         this.basketSource.next(basket);
-        console.log(this.getCurrentBasketValue());
       }) 
     );
   }
@@ -39,7 +38,6 @@ export class BasketService {
   }
   
   getBasket(id: string) {
-    console.log(this.baseUrl +'basket?id=' + id);
     return this.http.get(this.baseUrl +'basket?id=' + id).pipe(
       map((basket: IBasket)  => 
       {
@@ -52,8 +50,6 @@ export class BasketService {
 
   setBasket(basket: IBasket)
   {
-    console.log("basket = " +basket);
-    console.log(this.baseUrl + 'basket');
     return this.http.post(this.baseUrl + 'basket',basket).subscribe((response:IBasket) => 
     {
       this.basketSource.next(response);
@@ -133,7 +129,6 @@ export class BasketService {
   }
 
   addOrUpdateItem(items: IBasketItem[], itemToAdd: IBasketItem, quantity: number): IBasketItem[] {
-    console.log(items);
     const index = items.findIndex(i => i.id === itemToAdd.id);
     if(index === -1)
     {
